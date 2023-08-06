@@ -1,35 +1,33 @@
 #!/bin/sh
 
-# Defined path
-MainPath="$(pwd)"
+maindir="$(pwd)"
 
-# Make flashable zip
-MakeZip() {
-    if [ ! -d $Any ]; then
-        git clone https://github.com/TeraaBytee/AnyKernel3 -b master $Any
-        cd $Any
+pack() {
+    if [ ! -d $zipper ]; then
+        git clone https://github.com/$zipper_repo -b $zipper_branch $zipper
+        cd $zipper
     else
-        cd $Any
+        cd $zipper
         git reset --hard
-        git checkout master
-        git fetch origin master
-        git reset --hard origin/master
+        git checkout $zipper_branch
+        git fetch origin $zipper_branch
+        git reset --hard origin/$zipper_branch
     fi
-    cp -af $MainPath/out/arch/arm64/boot/Image.gz-dtb $Any
-    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME-$HeadCommit test by $KBUILD_BUILD_USER/g" anykernel.sh
-    zip -r9 $MainPath/"$Compiler-$ZIP_KERNEL_VERSION-$KERNEL_NAME-$TIME.zip" * -x .git README.md *placeholder
-    cd $MainPath
+    cp -af $maindir/out/arch/arm64/boot/Image.gz-dtb $zipper
+    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME-$commit test by $KBUILD_BUILD_USER/g" anykernel.sh
+    zip -r9 $maindir/"$toolchain-$ZIP_KERNEL_VERSION-$KERNEL_NAME-$TIME.zip" * -x .git README.md *placeholder
+    cd $maindir
 }
 
 # config
-HeadCommit="$(git log --pretty=format:'%h' -1)"
+commit="$(git log --pretty=format:'%h' -1)"
 export ARCH="arm64"
 export SUBARCH="arm64"
 export KBUILD_BUILD_USER="TeraaBytee"
 export KBUILD_BUILD_HOST="GithubServer"
-Defconfig="begonia_user_defconfig"
-KERNEL_NAME=$(cat "$MainPath/arch/arm64/configs/$Defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-ZIP_KERNEL_VERSION="4.14.$(cat "$MainPath/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')$(cat "$(pwd)/Makefile" | grep "EXTRAVERSION =" | sed 's/EXTRAVERSION = *//g')"
+defconfig="begonia_user_defconfig"
+KERNEL_NAME=$(cat "$maindir/arch/arm64/configs/$defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
+ZIP_KERNEL_VERSION="4.14.$(cat "$maindir/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')$(cat "$(pwd)/Makefile" | grep "EXTRAVERSION =" | sed 's/EXTRAVERSION = *//g')"
 TIME=$(date +"%m%d%H%M")
 
 # build
@@ -39,15 +37,14 @@ do
 
     bash toolchains/$toolchain.sh setup
 
-    Compiler=$toolchain
     BUILD_START=$(date +"%s")
 
-    bash toolchains/$toolchain.sh build $Defconfig
+    bash toolchains/$toolchain.sh build $defconfig
 
-    if [ -e $MainPath/out/arch/arm64/boot/Image.gz-dtb ]; then
+    if [ -e $maindir/out/arch/arm64/boot/Image.gz-dtb ]; then
         BUILD_END=$(date +"%s")
         DIFF=$((BUILD_END - BUILD_START))
-        MakeZip
+        pack
         echo "build succeed in $((DIFF / 60))m, $((DIFF % 60))s"
     else
         BUILD_END=$(date +"%s")

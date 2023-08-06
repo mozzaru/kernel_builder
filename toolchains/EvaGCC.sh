@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Defined path
-MainPath="$(pwd)"
-GCC64="$(pwd)/../EvaGCC64"
-GCC="$(pwd)/../EvaGCC"
+maindir="$(pwd)"
+GCC64="$maindir/../EvaGCC64"
+GCC="$maindir/../EvaGCC"
 
 case $1 in
     "setup" )
