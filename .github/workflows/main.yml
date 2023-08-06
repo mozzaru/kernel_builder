@@ -32,27 +32,7 @@ jobs:
         - name: checkout
           uses: actions/checkout@master
 
-        - name: initialize environment
-          run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: initializing environment for kernel compilation"
-            sudo apt-get update
-            sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
-        - name: clone kernel source
-          run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source, repo: $REPO"
-            git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
-        - name: run compilation script
-          run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $SCRIPTS"
-            cd kernel
-            sudo bash ../build.sh "$SCRIPTS"
-        - name: upload
-          run: |
-            cd kernel
-            ZIP=$(echo *.zip)
-            if [ -e $ZIP ]; then
-                bash ../tg_utils.sh up "$ZIP" ""
-            else
-                bash ../tg_utils.sh up "out/error.log" ""
-            fi
+        - name: drop all work to docker and flee
+          uses: ./docker/
+          id: a
 
