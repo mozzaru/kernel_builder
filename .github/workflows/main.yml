@@ -33,28 +33,16 @@ jobs:
 
         - name: initialize environment
           run: |
-            curl -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
-            -d chat_id="$CHAT_ID" \
-            -d "disable_web_page_preview=true" \
-            -d "parse_mode=html" \
-            -d text="initializing environment for kernel compilation"
+            bash send_tg_message.sh "initializing environment for kernel compilation"
             sudo apt-get update
             sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
         - name: clone kernel source
           run: |
-            curl -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
-            -d chat_id="$CHAT_ID" \
-            -d "disable_web_page_preview=true" \
-            -d "parse_mode=html" \
-            -d text="cloning kernel source"
+            bash send_tg_message.sh "cloning kernel source"
             git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH begonia
         - name: run compilation script
           run: |
-            curl -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
-            -d chat_id="$CHAT_ID" \
-            -d "disable_web_page_preview=true" \
-            -d "parse_mode=html" \
-            -d text="running compilation script"
+            bash send_tg_message.sh "running compilation script"
             cd begonia
             sudo bash ../$SCRIPT
         - name: upload
