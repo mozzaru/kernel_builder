@@ -44,7 +44,7 @@ jobs:
           run: |
             bash send_tg_message.sh "running compilation script"
             cd begonia
-            sudo bash ../$SCRIPT
+            sudo bash ../build.sh $SCRIPT
         - name: upload
           run: |
             cd begonia

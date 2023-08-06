@@ -1,6 +1,8 @@
 #!/bin/sh
 
 maindir="$(pwd)"
+outside="$maindir/.."
+zipper="$outside/zipper"
 
 pack() {
     if [ ! -d $zipper ]; then
@@ -27,7 +29,7 @@ export KBUILD_BUILD_USER="TeraaBytee"
 export KBUILD_BUILD_HOST="GithubServer"
 defconfig="begonia_user_defconfig"
 KERNEL_NAME=$(cat "$maindir/arch/arm64/configs/$defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-ZIP_KERNEL_VERSION="4.14.$(cat "$maindir/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')$(cat "$(pwd)/Makefile" | grep "EXTRAVERSION =" | sed 's/EXTRAVERSION = *//g')"
+ZIP_KERNEL_VERSION="4.14.$(cat "$maindir/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')$(cat "$maindir/Makefile" | grep "EXTRAVERSION =" | sed 's/EXTRAVERSION = *//g')"
 TIME=$(date +"%m%d%H%M")
 
 # build
