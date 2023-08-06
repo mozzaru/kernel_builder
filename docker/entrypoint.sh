@@ -1,4 +1,4 @@
-cd /github/workspace
+#!/usr/bin/bash
 
 bash tg_utils.sh msg "gh $RUN_NUM: initializing environment for kernel compilation"
 sudo apt-get update
