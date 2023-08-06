@@ -1,26 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 
 maindir="$(pwd)"
-outside="$maindir/.."
+outside="${maindir}/.."
 
-GCC64="$outside/EvaGCC/gcc-arm64"
-GCC="$outside/EvaGCC/gcc-arm"
+GCC64="${outside}/EvaGCC/gcc-arm64"
+GCC="${outside}/EvaGCC/gcc-arm"
 
 case $1 in
     "setup" )
         # Clone compiler
-        if [ ! -d $GCC64 ]; then
-            git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 $GCC64
+        if [[ ! -d "${GCC64}" ]]; then
+            git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 "${GCC64}"
         fi
-        if [ ! -d $GCC ]; then
-            git clone --depth=1 https://github.com/mvaisakh/gcc-arm $GCC
+        if [[ ! -d "${GCC}" ]]; then
+            git clone --depth=1 https://github.com/mvaisakh/gcc-arm "${GCC}"
         fi
     ;;
 
     "build" )
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
-            PATH=$GCC64/bin:$GCC/bin:/usr/bin:${PATH} \
+            PATH="${GCC64}/bin:${GCC}/bin:/usr/bin:${PATH}" \
             CROSS_COMPILE=aarch64-elf- \
             CROSS_COMPILE_ARM32=arm-eabi- \
             AR=aarch64-elf-ar \
