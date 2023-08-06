@@ -33,16 +33,16 @@ jobs:
 
         - name: initialize environment
           run: |
-            bash send_tg_message.sh "initializing environment for kernel compilation"
+            bash tg_utils.sh msg "initializing environment for kernel compilation"
             sudo apt-get update
             sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
         - name: clone kernel source
           run: |
-            bash send_tg_message.sh "cloning kernel source"
+            bash tg_utils.sh msg "cloning kernel source"
             git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH begonia
         - name: run compilation script
           run: |
-            bash send_tg_message.sh "running compilation script"
+            bash tg_utils.sh msg "running compilation script"
             cd begonia
             sudo bash ../build.sh $SCRIPT
         - name: upload
@@ -50,14 +50,8 @@ jobs:
             cd begonia
             ZIP=$(echo *.zip)
             if [ -e $ZIP ]; then
-                curl -F chat_id="$CHAT_ID" \
-                -F document=@"$ZIP" \
-                -F parse_mode=markdown https://api.telegram.org/bot$BOT_TOKEN/sendDocument \
-                -F caption="Test it @TeraaBytee"
+                bash tg_utils.sh up "$ZIP" ""
             else
-                curl -F chat_id="$CHAT_ID" \
-                -F document=@"out/error.log" \
-                -F parse_mode=markdown https://api.telegram.org/bot$BOT_TOKEN/sendDocument \
-                -F caption="Check it @TeraaBytee"
+                bash tg_utils.sh up "out/error.log" ""
             fi
 
