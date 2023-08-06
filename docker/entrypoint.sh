@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-bash tg_utils.sh msg "gh $RUN_NUM: initializing environment for kernel compilation"
 apt-get update
 apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
 
