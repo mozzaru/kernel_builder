@@ -15,9 +15,11 @@ cd kernel
 bash ../build.sh "$SCRIPTS"
 
 ZIP=$(echo *.zip)
-if [ -e $ZIP ]; then
+if [[ -e $ZIP ]]; then
+  for file in $(find . -name '*.zip' -maxdepth 1); do
     bash ../tg_utils.sh up "$ZIP" ""
+  done
 else
-    bash ../tg_utils.sh up "out/error.log" ""
+  bash ../tg_utils.sh up "out/error.log" ""
 fi
 
