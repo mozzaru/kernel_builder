@@ -9,10 +9,10 @@ apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev \
 bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source, repo: $REPO"
 git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
 
-bash tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $SCRIPTS"
+bash tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
 
 cd kernel
-bash ../build.sh "$SCRIPTS"
+bash ../build.sh "$COMPILERS"
 
 ZIP=$(echo *.zip)
 if [[ -e $ZIP ]]; then

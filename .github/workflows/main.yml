@@ -12,6 +12,11 @@ on: # [push]
 #    - cron: 0 8 * * 5
 # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      COMPILER:
+        description: 'compilers used'
+        required: true
+        default: 'NeutronClang'
   watch:
     types: [started]
 
@@ -21,7 +26,7 @@ env:
   REPO: TelegramAt25/android_kernel_xiaomi_selene
   RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: thirteen
-  SCRIPTS: EvaGCC
+  COMPILERS: ${{ github.event.inputs.COMPILER }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
