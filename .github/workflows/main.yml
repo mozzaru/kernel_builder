@@ -36,7 +36,7 @@ jobs:
             bash tg_utils.sh msg "initializing environment for kernel compilation\n
               github build ${{ github.run_number }}_${{ github.run_attempt }}"
             sudo apt-get update
-            sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
+            sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
         - name: clone kernel source
           run: |
             bash tg_utils.sh msg "cloning kernel source\n
