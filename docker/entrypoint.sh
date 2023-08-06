@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 bash tg_utils.sh msg "gh $RUN_NUM: initializing environment for kernel compilation"
-sudo apt-get update
-sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
+apt-get update
+apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
 
 bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source, repo: $REPO"
 git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
