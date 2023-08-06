@@ -31,7 +31,10 @@ jobs:
     steps:
         - name: checkout
           uses: actions/checkout@master
-
+        - name: copy stuff to the docker dir lmao
+          run: |
+            cp *.sh ./docker/
+            cp -r toolchains ./docker/
         - name: drop all work to docker and flee
           uses: ./docker/
           id: a
