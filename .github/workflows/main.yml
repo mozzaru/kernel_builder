@@ -19,6 +19,7 @@ env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
   CHAT_ID: ${{ secrets.CHAT_ID }}
   REPO: TelegramAt25/android_kernel_xiaomi_selene
+  RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: thirteen
   SCRIPTS: EvaGCC
   TZ: Asia/Ho_Chi_Minh
@@ -33,16 +34,16 @@ jobs:
 
         - name: initialize environment
           run: |
-            bash tg_utils.sh msg "initializing environment for kernel compilation | github build ${{ github.run_number }}_${{ github.run_attempt }}"
+            bash tg_utils.sh msg "gh $RUN_NUM: initializing environment for kernel compilation"
             sudo apt-get update
             sudo apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev openssl python3 zip zstd make clang gcc-arm-linux-gnueabi software-properties-common -y
         - name: clone kernel source
           run: |
-            bash tg_utils.sh msg "cloning kernel source | repo: $REPO"
+            bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source, repo: $REPO"
             git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
         - name: run compilation script
           run: |
-            bash tg_utils.sh msg "running compilation script(s): $SCRIPTS"
+            bash tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $SCRIPTS"
             cd kernel
             sudo bash ../build.sh "$SCRIPTS"
         - name: upload
