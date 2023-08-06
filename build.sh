@@ -40,11 +40,11 @@ TIME=$(date +"%m%d%H%M")
 for toolchain in $1; do
   rm -rf out
 
-  bash "toolchains/${toolchain}.sh" setup
+  bash "${outside}/toolchains/${toolchain}.sh" setup
 
   BUILD_START=$(date +"%s")
 
-  bash "toolchains/${toolchain}.sh" build ${defconfig}
+  bash "${outside}/toolchains/${toolchain}.sh" build ${defconfig}
 
   if [ -e "${maindir}/out/arch/arm64/boot/Image.gz-dtb" ]; then
     BUILD_END=$(date +"%s")
