@@ -41,7 +41,8 @@ jobs:
             cp *.sh ./docker/
             cp -r toolchains ./docker/
         - name: notify the start of the workflow
-          run: bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
+          run: |
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
         - name: drop all work to docker and flee
           uses: ./docker/
           id: a
