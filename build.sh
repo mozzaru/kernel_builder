@@ -50,6 +50,7 @@ for toolchain in $1; do
   bash "${outside}/toolchains/${toolchain}.sh" setup
 
   BUILD_START=$(date +"%s")
+  export CUR_TOOLCHAIN="${toolchain}"
 
   bash "${outside}/toolchains/${toolchain}.sh" build ${defconfig}
 
@@ -58,11 +59,12 @@ for toolchain in $1; do
     DIFF=$((BUILD_END - BUILD_START))
     zip_name="${maindir}/${KERNEL_NAME}-legacy-${TIME}-${commit}-${toolchain}-${ZIP_KERNEL_VERSION}.zip"
     pack ${zip_name}
-    echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}_info.txt"
-    echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}_info.txt"
+    echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}.info"
+    echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}.info"
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
-    echo "build failed in $((DIFF / 60))m, $((DIFF % 60))s"
+    echo "build failed in $((DIFF / 60))m, $((DIFF % 60))s" >> "error_${toolchain}.log.info"
+    echo "compiler: ${toolchain}" >> "error_${toolchain}.log.info"
   fi
 done

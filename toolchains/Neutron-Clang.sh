@@ -37,6 +37,6 @@ case $1 in
             HOSTCXX=clang++ \
             HOSTLD=ld.lld \
             HOSTAR=llvm-ar \
-            2>&1 | tee out/error.log
+            2>&1 | tee error_${CUR_TOOLCHAIN}.log
     ;;
 esac
