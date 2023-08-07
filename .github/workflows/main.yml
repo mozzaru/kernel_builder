@@ -57,12 +57,9 @@ jobs:
             bash ../build.sh "$COMPILERS"
         - name: upload
           run: |
-            files=$(find . -maxdepth 1 -name '*.zip')
-            if [[ -n ${files} ]]; then
-              for file in ${files}; do
-                bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
-              done
-            fi
+            for file in $(find . -maxdepth 1 -name '*.zip'); do
+              bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
+            done
             for file in $(find . -maxdepth 1 -name '*.log'); do
               bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
             done
