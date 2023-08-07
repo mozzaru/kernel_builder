@@ -18,7 +18,7 @@ bash ../build.sh "$COMPILERS"
 ZIP=$(echo *.zip)
 if [[ -e $ZIP ]]; then
   for file in $(find . -name '*.zip' -maxdepth 1); do
-    bash ../tg_utils.sh up "$(file)" ""
+    bash ../tg_utils.sh up "${file}" ""
   done
 else
   bash ../tg_utils.sh up "out/error.log" ""
