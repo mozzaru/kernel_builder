@@ -9,6 +9,10 @@ zipper="${outside}/zipper"
 zipper_repo=fukiame/AnyKernel3-niigo
 zipper_branch=selene-old
 
+out_image="${maindir}/out/arch/arm64/boot/Image.gz-dtb"
+out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
+out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
+
 pack() {
   if [[ ! -d ${zipper} ]]; then
     git clone https://github.com/${zipper_repo} -b ${zipper_branch} "${zipper}"
@@ -20,8 +24,10 @@ pack() {
     git fetch origin ${zipper_branch}
     git reset --hard origin/${zipper_branch}
   fi
-  cp -af "${maindir}/out/arch/arm64/boot/Image.gz-dtb" "${zipper}"
-  zip -r9 "${maindir}/${toolchain}-${ZIP_KERNEL_VERSION}-${KERNEL_NAME}-${TIME}.zip" ./* -x .git README.md ./*placeholder
+  cp -af "${out_image}" "${zipper}"
+  cp -af "${out_dtb}" "${zipper}"
+  cp -af "${out_dtbo}" "${zipper}"
+  zip -r9 "${maindir}/${KERNEL_NAME}-legacy-${TIME}-${toolchain}-${ZIP_KERNEL_VERSION}.zip" ./* -x .git README.md ./*placeholder
   cd "${maindir}"
 }
 
@@ -33,8 +39,8 @@ export KBUILD_BUILD_USER="nijuugo-ji"
 export KBUILD_BUILD_HOST="telegram-de"
 defconfig="selene_defconfig"
 KERNEL_NAME=$(cat "${maindir}/arch/arm64/configs/${defconfig}" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-ZIP_KERNEL_VERSION="4.14.$(cat "${maindir}/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')$(cat "${maindir}/Makefile" | grep "EXTRAVERSION =" | sed 's/EXTRAVERSION = *//g')"
-TIME=$(date +"%m%d%H%M")
+ZIP_KERNEL_VERSION="4.14.$(cat "${maindir}/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
+TIME=$(date +"%y%m%d-%H%M")
 
 # build
 for toolchain in $1; do
