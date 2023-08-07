@@ -1,6 +1,0 @@
-name: idk lmao
-description: why, github, why only ubruhtu
-author: fukiame <fukiame@proton.me>
-runs:
-  using: docker
-  image: Dockerfile
