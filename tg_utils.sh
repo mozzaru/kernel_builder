@@ -8,12 +8,12 @@ case $1 in
       -d chat_id="${CHAT_ID}" \
       -d "disable_web_page_preview=true" \
       -d "parse_mode=html" \
-      -d text="$2"
+      -d text="$(echo "$2" | sed 's/%nl/\n/g')"
   ;;
   up | upload)
     curl -F chat_id="${CHAT_ID}" \
       -F document=@"$2" \
       -F parse_mode=markdown https://api.telegram.org/bot${BOT_TOKEN}/sendDocument \
-      -F caption="$3"
+      -F caption="$(echo "$3" | sed 's/%nl/\n/g')"
   ;;
 esac
