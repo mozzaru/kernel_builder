@@ -46,4 +46,11 @@ jobs:
         - name: drop all work to docker and flee
           uses: ./docker/
           id: a
+        - name: if it fails
+          if: ${{ failure() }}
+          run: |
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow failed"
+        - name: notify the end of the workflow
+          run: |
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow ended"
 
