@@ -27,7 +27,7 @@ pack() {
   cp -af "${out_image}" "${zipper}"
   cp -af "${out_dtb}" "${zipper}"
   cp -af "${out_dtbo}" "${zipper}"
-  zip -r9 "${maindir}/${KERNEL_NAME}-legacy-${TIME}-${toolchain}-${ZIP_KERNEL_VERSION}.zip" ./* -x .git README.md ./*placeholder
+  zip -r9 "$1" ./* -x .git README.md ./*placeholder
   cd "${maindir}"
 }
 
@@ -55,8 +55,10 @@ for toolchain in $1; do
   if [ -e "${maindir}/out/arch/arm64/boot/Image.gz-dtb" ]; then
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
-    pack
-    echo "build succeed in $((DIFF / 60))m, $((DIFF % 60))s"
+    zip_name="${maindir}/${KERNEL_NAME}-legacy-${TIME}-${commit}-${toolchain}-${ZIP_KERNEL_VERSION}.zip"
+    pack ${zip_name}
+    echo "build succeed in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}_info.txt"
+    echo "md5 sum: $(md5sum "${zip_name}")" >> "${zip_name}_info.txt"
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))

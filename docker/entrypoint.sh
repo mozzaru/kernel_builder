@@ -18,7 +18,7 @@ bash ../build.sh "$COMPILERS"
 files=$(find . -maxdepth 1 -name '*.zip')
 if [[ -n ${files} ]]; then
   for file in ${files}; do
-    bash ../tg_utils.sh up "${file}" ""
+    bash ../tg_utils.sh up "${file}" "$(cat "${file}_info.txt")"
   done
 else
   bash ../tg_utils.sh up "out/error.log" ""
