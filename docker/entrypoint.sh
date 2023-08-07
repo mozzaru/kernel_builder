@@ -15,9 +15,9 @@ bash tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
 cd kernel
 bash ../build.sh "$COMPILERS"
 
-ZIP=$(echo *.zip)
-if [[ -e $ZIP ]]; then
-  for file in $(find . -name '*.zip' -maxdepth 1); do
+files=$(find . -maxdepth 1 -name '*.zip')
+if [[ -n ${files} ]]; then
+  for file in ${files}; do
     bash ../tg_utils.sh up "${file}" ""
   done
 else
