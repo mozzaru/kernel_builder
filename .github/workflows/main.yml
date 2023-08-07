@@ -17,8 +17,6 @@ on: # [push]
         description: 'compilers used'
         required: true
         default: 'Neutron-Clang'
-  watch:
-    types: [started]
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
