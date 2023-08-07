@@ -16,7 +16,7 @@ on: # [push]
       COMPILER:
         description: 'compilers used'
         required: true
-        default: 'NeutronClang'
+        default: 'Neutron-Clang'
   watch:
     types: [started]
 
