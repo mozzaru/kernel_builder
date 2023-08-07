@@ -58,7 +58,7 @@ for toolchain in $1; do
     zip_name="${maindir}/${KERNEL_NAME}-legacy-${TIME}-${commit}-${toolchain}-${ZIP_KERNEL_VERSION}.zip"
     pack ${zip_name}
     echo "build succeed in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}_info.txt"
-    echo "md5 sum: $(md5sum "${zip_name}")" >> "${zip_name}_info.txt"
+    echo "md5 sum: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}_info.txt"
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
