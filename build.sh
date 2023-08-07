@@ -9,6 +9,8 @@ zipper="${outside}/zipper"
 zipper_repo=fukiame/AnyKernel3-niigo
 zipper_branch=selene-old
 
+defconfig="selene_defconfig"
+
 out_image="${maindir}/out/arch/arm64/boot/Image.gz-dtb"
 out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
 out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
@@ -25,8 +27,8 @@ pack() {
     git reset --hard origin/${zipper_branch}
   fi
   cp -af "${out_image}" "${zipper}"
-  cp -af "${out_dtb}" "${zipper}"
-  cp -af "${out_dtbo}" "${zipper}"
+  cp -af "${out_dtb}" "${zipper}/dtb"
+  cp -af "${out_dtbo}" "${zipper}/dtbo.img"
   zip -r9 "$1" ./* -x .git README.md ./*placeholder
   cd "${maindir}"
 }
@@ -37,7 +39,6 @@ export ARCH="arm64"
 export SUBARCH="arm64"
 export KBUILD_BUILD_USER="nijuugo-ji"
 export KBUILD_BUILD_HOST="telegram-de"
-defconfig="selene_defconfig"
 KERNEL_NAME=$(cat "${maindir}/arch/arm64/configs/${defconfig}" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
 ZIP_KERNEL_VERSION="4.14.$(cat "${maindir}/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
 TIME=$(date +"%y%m%d-%H%M")
@@ -57,8 +58,8 @@ for toolchain in $1; do
     DIFF=$((BUILD_END - BUILD_START))
     zip_name="${maindir}/${KERNEL_NAME}-legacy-${TIME}-${commit}-${toolchain}-${ZIP_KERNEL_VERSION}.zip"
     pack ${zip_name}
-    echo "build succeed in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}_info.txt"
-    echo "md5 sum: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}_info.txt"
+    echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}_info.txt"
+    echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}_info.txt"
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
