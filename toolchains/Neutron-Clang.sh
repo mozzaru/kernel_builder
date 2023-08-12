@@ -11,7 +11,7 @@ case $1 in
         if [[ ! -d "${dir}" ]]; then
           mkdir ${dir} && cd ${dir}
           curl -LO "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman"
-          if ! bash antman -S=${ver_number} &>/dev/null; then
+          if ! bash antman -S=latest &>/dev/null; then
               exit 1
           fi
         fi
