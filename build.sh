@@ -54,7 +54,7 @@ for toolchain in $1; do
 
   bash "${outside}/toolchains/${toolchain}.sh" build ${defconfig}
 
-  if [ -e "${maindir}/out/arch/arm64/boot/Image.gz-dtb" ]; then
+  if [ -e "${out_image}" ]; then
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
     zip_name="${maindir}/${KERNEL_NAME}-legacy-${TIME}-${commit}-${toolchain}-${ZIP_KERNEL_VERSION}.zip"
