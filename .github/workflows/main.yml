@@ -31,18 +31,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:kinetic
+      image: fedora:latest
 
     steps:
         - name: checkout
           uses: actions/checkout@master
+        - name: start of workflow
+          run: |
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
         - name: init build env
           run: |
-            apt-get update
-            apt-get install llvm lld bc bison ca-certificates curl flex gcc git libc6-dev \
-              libssl-dev openssl python3 python2 zip zstd make clang gcc-arm-linux-gnueabi \
-              software-properties-common device-tree-compiler libxml2 libarchive-tools \
-              libelf-dev libssl-dev libtfm-dev wget xz-utils -y
+            dnf groupinstall "Development tools" -y
+            dnf install llvm lld bc bison ca-certificates curl flex glibc-devel.i686 glibc-devel binutils-devel openssl python3 python2 zstd clang gcc-arm-linux-gnu dtc libxml2 libarchive openssl-devel tomsfastmath-devel wget xz -y
             ln -sf "/usr/bin/python3" /usr/bin/python
         - name: show host info
           run: |
@@ -61,10 +61,12 @@ jobs:
           run: |
             cd kernel
             for file in $(find . -maxdepth 1 -name '*.zip'); do
-              bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
+              bash ../tg_utils.sh up "${file}" "$(cat '${file}.info')"
             done
             for file in $(find . -maxdepth 1 -name '*.log'); do
-              bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
+              if [[ -e "error_${file}.info" ]]; do
+                bash ../tg_utils.sh up "${file}" "$(cat 'error_${file}.info')"
+              fi
             done
         - name: if it fails
           if: ${{ failure() }}

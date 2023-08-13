@@ -30,6 +30,6 @@ case $1 in
             OBCOPY=llvm-objcopy \
             OBJDUMP=aarch64-elf-objdump \
             STRIP=aarch64-elf-strip \
-            2>&1 | tee error_${CUR_TOOLCHAIN}.log
+            2>&1 | tee ${CUR_TOOLCHAIN}.log
     ;;
 esac
