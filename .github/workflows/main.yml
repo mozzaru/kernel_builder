@@ -55,6 +55,7 @@ jobs:
             bash ../build.sh "$COMPILERS"
         - name: upload
           run: |
+            cd kernel
             for file in $(find . -maxdepth 1 -name '*.zip'); do
               bash ../tg_utils.sh up "${file}" '$(cat "${file}.info")'
             done
