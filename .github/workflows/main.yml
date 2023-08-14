@@ -61,11 +61,11 @@ jobs:
           run: |
             cd kernel
             for file in $(find . -maxdepth 1 -name '*.zip'); do
-              bash ../tg_utils.sh up "${file}" "$(cat '${file}.info')"
+              bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
             done
             for file in $(find . -maxdepth 1 -name '*.log'); do
               if [[ -e "error_${file}.info" ]]; do
-                bash ../tg_utils.sh up "${file}" "$(cat 'error_${file}.info')"
+                bash ../tg_utils.sh up "${file}" "$(cat "error_${file}.info")"
               fi
             done
         - name: if it fails
