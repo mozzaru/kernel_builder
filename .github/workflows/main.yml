@@ -21,6 +21,10 @@ on: # [push]
         description: 'kernel branch'
         required: true
         default: 'thirteen'
+      NOTES:
+        description: 'notes to print out'
+        required: false
+        default: ''
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -28,6 +32,7 @@ env:
   REPO: TelegramAt25/android_kernel_xiaomi_selene
   RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: ${{ github.event.inputs.KBRANCH }}
+  NOTE: ${{ github.event.inputs.NOTES }}
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   TZ: Asia/Ho_Chi_Minh
 
@@ -52,6 +57,11 @@ jobs:
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: build env initialized"
             bash tg_utils.sh msg "gh $RUN_NUM: host: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2)%nlgh $RUN_NUM: free disk space: $(df --sync -BM --output=avail / | grep -v Avail)"
+        - name: print notes if exists
+          run: |
+            if [[ ! -z $NOTE ]]; then
+              bash tg_utils.sh msg "gh $RUN_NUM: $NOTE"
+            fi
         - name: clone kernel source
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source%nlgh $RUN_NUM: repo: $REPO%nlgh $RUN_NUM: branch: $KERNEL_BRANCH"
