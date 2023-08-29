@@ -25,6 +25,10 @@ on: # [push]
         description: 'notes to print out'
         required: false
         default: ''
+      SUFFIX:
+        description: 'suffix to aplly to teh zip filename'
+        required: false
+        default: '-legacy'
       KSU:
         description: 'if dont want ksu then leave blank'
         required: false
@@ -39,6 +43,7 @@ env:
   NOTE: ${{ github.event.inputs.NOTES }}
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   PATCH_KSU: ${{ github.event.inputs.KSU }}
+  SUFFIX: ${{ github.event.inputs.SUFFIX }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
