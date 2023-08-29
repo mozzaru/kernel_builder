@@ -65,8 +65,7 @@ jobs:
             ln -sf "/usr/bin/python3" /usr/bin/python
         - name: show host info
           run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: build env initialized"
-            bash tg_utils.sh msg "gh $RUN_NUM: host: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2)%nlgh $RUN_NUM: free disk space: $(df --sync -BM --output=avail / | grep -v Avail)"
+            bash tg_utils.sh msg "gh $RUN_NUM: build env initialized%nlgh $RUN_NUM: host: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2)%nlgh $RUN_NUM: free disk space: $(df --sync -BM --output=avail / | grep -v Avail)"
         - name: print notes if exists
           run: |
             if [[ ! -z $NOTE ]]; then
