@@ -25,6 +25,10 @@ on: # [push]
         description: 'notes to print out'
         required: false
         default: ''
+      KSU:
+        description: 'if dont want ksu then leave blank'
+        required: false
+        default: ''
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -34,6 +38,7 @@ env:
   KERNEL_BRANCH: ${{ github.event.inputs.KBRANCH }}
   NOTE: ${{ github.event.inputs.NOTES }}
   COMPILERS: ${{ github.event.inputs.COMPILER }}
+  PATCH_KSU: ${{ github.event.inputs.KSU }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
@@ -66,6 +71,20 @@ jobs:
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source%nlgh $RUN_NUM: repo: $REPO%nlgh $RUN_NUM: branch: $KERNEL_BRANCH"
             git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
+        - name: patch for ksu if specified
+          run: |
+            if [[ ! -z $PATCH_KSU ]]; then
+              bash tg_utils.sh msg "gh $RUN_NUM: KernelSU patching enabled, patching"
+              cd kernel
+
+              curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+              echo KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD) >> $GITHUB_ENV
+              echo KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10000 + 200)) >> $GITHUB_ENV
+          
+              for patch_file in ../ksu_patches/*.patch ; do
+                patch -p1 --no-backup-if-mismatch < "$patch_file"
+              done
+            fi
         - name: run compilation scripts
           run: |
             cd kernel
