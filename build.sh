@@ -29,6 +29,9 @@ pack() {
   cp -af "${out_image}" "${zipper}"
   cp -af "${out_dtb}" "${zipper}/dtb"
   cp -af "${out_dtbo}" "${zipper}/dtbo.img"
+  if [[ -e ${maindir}/banner_append ]]; then
+    cat ${maindir}/banner_append >> ${zipper}/banner
+  fi
   zip -r9 "$1" ./* -x .git README.md ./*placeholder
   cd "${maindir}"
 }

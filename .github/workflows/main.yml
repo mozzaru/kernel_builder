@@ -85,6 +85,8 @@ jobs:
               curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
               echo KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD) >> $GITHUB_ENV
               echo KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10000 + 200)) >> $GITHUB_ENV
+
+              echo "includes KernelSU ver $KERNELSU_VERSION" >> banner_append
           
               for patch_file in ../ksu_patches/*.patch ; do
                 patch -p1 --no-backup-if-mismatch < "$patch_file"
