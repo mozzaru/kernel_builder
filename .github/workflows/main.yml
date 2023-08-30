@@ -74,7 +74,7 @@ jobs:
         - name: clone kernel source
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source%nlgh $RUN_NUM: repo: $REPO%nlgh $RUN_NUM: branch: $KERNEL_BRANCH"
-            git clone --depth=1 https://github.com/$REPO -b $KERNEL_BRANCH kernel
+            git clone --depth=1 --single-branch https://github.com/$REPO -b $KERNEL_BRANCH kernel
         - name: patch for ksu if specified
           run: |
             if [[ ! -z $PATCH_KSU ]]; then
