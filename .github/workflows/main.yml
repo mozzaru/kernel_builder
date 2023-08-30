@@ -81,15 +81,7 @@ jobs:
               bash tg_utils.sh msg "gh $RUN_NUM: KernelSU patching enabled, patching"
               cd kernel
 
-              curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-              KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD)
-              KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10000 + 200))
-
-              echo "includes KernelSU ver $KERNELSU_VERSION" >> banner_append
-          
-              for patch_file in ../ksu_patches/*.patch ; do
-                patch -p1 --no-backup-if-mismatch < "$patch_file"
-              done
+              bash ../ksu/patch.sh
             fi
         - name: run compilation scripts
           run: |
