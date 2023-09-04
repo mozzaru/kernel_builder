@@ -17,9 +17,9 @@ export defconfig="selene_defconfig"
 export zipper_repo=fukiame/AnyKernel3-niigo
 export zipper_branch=selene-old
 
-export out_image="${maindir}/out/arch/arm64/boot/Image.gz-dtb"
-export out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
-export out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
+export out_image="${maindir}/out/arch/${ARCH}/boot/Image.gz-dtb"
+export out_dtb="${maindir}/out/arch/${ARCH}/boot/dts/mediatek/mt6768.dtb"
+export out_dtbo="${maindir}/out/arch/${ARCH}/boot/dtbo.img"
 
 export zipper="${outside}/zipper"
 
