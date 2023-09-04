@@ -87,6 +87,11 @@ jobs:
 
               bash ../ksu/patch.sh
             fi
+        - name: print kernel info
+          run: |
+            cd kernel
+            source ../env
+          bash ../tg_utils.sh msg "gh $RUN_NUM: kernel name: ${kernel_name}%nlgh $RUN_NUM: kernel ver: ${kernel_ver}%nlgh $RUN_NUM: kernel head commit: ${kernel_head}"
         - name: run compilation scripts
           run: |
             cd kernel

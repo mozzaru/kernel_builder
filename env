@@ -2,6 +2,9 @@
 #
 # config and common vars
 
+export maindir="$(pwd)"
+export outside="${maindir}/.."
+
 # config start -----
 
 export ARCH="arm64"
