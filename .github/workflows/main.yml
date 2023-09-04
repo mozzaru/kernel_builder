@@ -17,6 +17,10 @@ on: # [push]
         description: 'compilers used'
         required: true
         default: 'Neutron-Clang'
+      KREPO:
+        description: 'kernel repo'
+        required: true
+        default: 'TelegramAt25/android_kernel_xiaomi_selene'
       KBRANCH:
         description: 'kernel branch'
         required: true
@@ -37,7 +41,7 @@ on: # [push]
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
   CHAT_ID: ${{ secrets.CHAT_ID }}
-  REPO: TelegramAt25/android_kernel_xiaomi_selene
+  REPO: ${{ github.event.inputs.KREPO }}
   RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: ${{ github.event.inputs.KBRANCH }}
   NOTE: ${{ github.event.inputs.NOTES }}
