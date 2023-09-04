@@ -48,6 +48,6 @@ for toolchain in $1; do
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
-    echo "build failed in $((DIFF / 60))m, $((DIFF % 60))s" >> "error_${toolchain}.log.info"
+    echo "build failed in $((DIFF / 60))m, $((DIFF % 60))s" >> "${toolchain}.log.info"
   fi
 done
