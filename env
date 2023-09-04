@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# config and common vars
+
+export maindir="$(pwd)"
+export outside="${maindir}/.."
+export zipper="${outside}/zipper"
+
+# config start -----
+
+export ARCH="arm64"
+export SUBARCH="arm64"
+export KBUILD_BUILD_USER="nijuugo-ji"
+export KBUILD_BUILD_HOST="telegram-de"
+
+export defconfig="selene_defconfig"
+
+export zipper_repo=fukiame/AnyKernel3-niigo
+export zipper_branch=selene-old
+
+export out_image="${maindir}/out/arch/arm64/boot/Image.gz-dtb"
+export out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
+export out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
+
+# config end -----
+
+export kernel_head="$(git log --pretty=format:'%h' -1)"
+export kernel_name=$(cat "${maindir}/arch/arm64/configs/${defconfig}" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
+export kernel_ver="4.14.$(cat "${maindir}/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
+export TIME=$(date +"%y%m%d-%H%M")

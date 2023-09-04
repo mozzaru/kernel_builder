@@ -2,18 +2,7 @@
 #
 # idk lmao
 
-maindir="$(pwd)"
-outside="${maindir}/.."
-zipper="${outside}/zipper"
-
-zipper_repo=fukiame/AnyKernel3-niigo
-zipper_branch=selene-old
-
-defconfig="selene_defconfig"
-
-out_image="${maindir}/out/arch/arm64/boot/Image.gz-dtb"
-out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
-out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
+source env
 
 pack() {
   if [[ ! -d ${zipper} ]]; then
@@ -36,16 +25,6 @@ pack() {
   cd "${maindir}"
 }
 
-# config
-commit="$(git log --pretty=format:'%h' -1)"
-export ARCH="arm64"
-export SUBARCH="arm64"
-export KBUILD_BUILD_USER="nijuugo-ji"
-export KBUILD_BUILD_HOST="telegram-de"
-KERNEL_NAME=$(cat "${maindir}/arch/arm64/configs/${defconfig}" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-ZIP_KERNEL_VERSION="4.14.$(cat "${maindir}/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
-TIME=$(date +"%y%m%d-%H%M")
-
 # build
 for toolchain in $1; do
   rm -rf out
@@ -60,7 +39,7 @@ for toolchain in $1; do
   if [ -e "${out_image}" ]; then
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
-    zip_name="${maindir}/${KERNEL_NAME}${SUFFIX}-${TIME}-${commit}-${ZIP_KERNEL_VERSION}.zip"
+    zip_name="${maindir}/${kernel_name}${SUFFIX}-${TIME}-${commit}-${kernel_ver}.zip"
     pack ${zip_name}
     echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}.info"
     echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}.info"

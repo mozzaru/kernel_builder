@@ -1,5 +1,4 @@
-maindir="$(pwd)"
-outside="${maindir}/.."
+source env
 
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD)
