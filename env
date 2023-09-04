@@ -2,8 +2,6 @@
 #
 # config and common vars
 
-export zipper="${outside}/zipper"
-
 # config start -----
 
 export ARCH="arm64"
@@ -21,6 +19,8 @@ export out_dtb="${maindir}/out/arch/arm64/boot/dts/mediatek/mt6768.dtb"
 export out_dtbo="${maindir}/out/arch/arm64/boot/dtbo.img"
 
 # config end -----
+
+export zipper="${outside}/zipper"
 
 export defconfig_file="${maindir}/arch/${ARCH}/configs/${defconfig}"
 
