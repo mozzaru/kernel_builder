@@ -2,7 +2,9 @@
 #
 # idk lmao
 
-source env
+export maindir="$(pwd)"
+export outside="${maindir}/.."
+source "${outside}/env"
 
 pack() {
   if [[ ! -d ${zipper} ]]; then

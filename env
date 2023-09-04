@@ -2,8 +2,6 @@
 #
 # config and common vars
 
-export maindir="$(pwd)"
-export outside="${maindir}/.."
 export zipper="${outside}/zipper"
 
 # config start -----
