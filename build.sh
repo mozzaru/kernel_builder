@@ -41,7 +41,6 @@ for toolchain in $1; do
   if [ -e "${out_image}" ]; then
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
-    zip_name="${maindir}/${kernel_name}${SUFFIX}-${TIME}-${kernel_head}-${kernel_ver}.zip"
     pack ${zip_name}
     echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}.info"
     echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}.info"
