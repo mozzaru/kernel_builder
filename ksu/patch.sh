@@ -1,10 +1,13 @@
+#!/bin/bash
+#
+# hdjsjfjjwufbeizihfjejzf
+
 source env
 
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD)
 KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10000 + 200))
 
-defconfig="selene_defconfig"
 defconfig_file="${maindir}/arch/arm64/configs/${defconfig}"
 
 KERNEL_NAME=$(cat "${defconfig_file}" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
