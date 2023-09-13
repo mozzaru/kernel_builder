@@ -31,12 +31,12 @@ pack() {
 for toolchain in $1; do
   rm -rf out
 
-  bash "${outside}/toolchains/${toolchain}.sh" setup
+  bash -x "${outside}/toolchains/${toolchain}.sh" setup
 
   BUILD_START=$(date +"%s")
   export CUR_TOOLCHAIN="${toolchain}"
 
-  bash "${outside}/toolchains/${toolchain}.sh" build ${defconfig}
+  bash -x "${outside}/toolchains/${toolchain}.sh" build ${defconfig}
 
   if [ -e "${out_image}" ]; then
     BUILD_END=$(date +"%s")
