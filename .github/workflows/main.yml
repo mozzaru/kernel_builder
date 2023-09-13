@@ -62,6 +62,7 @@ jobs:
         - name: start of workflow
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
+            echo WORKFLOW_START=$(date +"%s") >> $GITHUB_ENV
         - name: init build env
           run: |
             dnf group install development-tools -y
@@ -111,8 +112,10 @@ jobs:
         - name: if it fails
           if: ${{ failure() }}
           run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: workflow failed"
+            WORKFLOW_END=$(date +"%s")
+            WDIFF=$((WORKFLOW_END - WORKFLOW_START))
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow failed in $WDIFF"
         - name: end of workflow
           run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: workflow ended"
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow ended in $WDIFF"
 
