@@ -114,10 +114,10 @@ jobs:
           run: |
             WORKFLOW_END=$(date +"%s")
             WDIFF=$((WORKFLOW_END - WORKFLOW_START))
-            bash tg_utils.sh msg "gh $RUN_NUM: workflow failed in $WDIFF"
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow failed in $((WDIFF / 60))m, $((WDIFF % 60))s"
         - name: end of workflow
           run: |
             WORKFLOW_END=$(date +"%s")
             WDIFF=$((WORKFLOW_END - WORKFLOW_START))
-            bash tg_utils.sh msg "gh $RUN_NUM: workflow ended in $WDIFF"
+            bash tg_utils.sh msg "gh $RUN_NUM: workflow ended in $((WDIFF / 60))m, $((WDIFF % 60))s"
 
