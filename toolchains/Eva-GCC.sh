@@ -23,7 +23,6 @@ case $1 in
             PATH="${GCC64}/bin:${GCC}/bin:/usr/bin:${PATH}" \
             CROSS_COMPILE=aarch64-elf- \
             CROSS_COMPILE_ARM32=arm-eabi- \
-            CROSS_COMPILE_COMPAT=arm-eabi- \
             AR=aarch64-elf-ar \
             NM=llvm-nm \
             LD=ld.lld \
