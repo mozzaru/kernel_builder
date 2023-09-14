@@ -16,7 +16,7 @@ on: # [push]
       COMPILER:
         description: 'compilers used'
         required: true
-        default: 'WeebX-Clang'
+        default: 'Neutron-Clang-17'
       KREPO:
         description: 'kernel repo'
         required: true
@@ -24,7 +24,7 @@ on: # [push]
       KBRANCH:
         description: 'kernel branch'
         required: true
-        default: 'thirteen'
+        default: 'niigo'
       NOTES:
         description: 'notes to print out'
         required: false
