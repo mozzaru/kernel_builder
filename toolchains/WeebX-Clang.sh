@@ -10,14 +10,13 @@ case $1 in
         # Clone compiler
         if [[ ! -d "${dir}" ]]; then
           mkdir ${dir} && cd ${dir}
-          curl -Lo a.tar.gz "https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-18.0.0-release/WeebX-Clang-18.0.0.tar.gz"
-          tar -zxf a.tar.gz
+	  curl -Lo a.tar.gz "https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-18.0.0-release/WeebX-Clang-18.0.0.tar.gz"
+	  tar -zxf a.tar.gz
         fi
     ;;
 
     "build" )
         export PATH="${dir}/bin:/usr/bin:${PATH}"
-        clang -v > ${CUR_TOOLCHAIN}.info
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE="aarch64-linux-gnu-" \
