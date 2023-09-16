@@ -37,6 +37,10 @@ on: # [push]
         description: 'if dont want ksu then leave blank'
         required: false
         default: ''
+      DOTCONFIG:
+        description: 'if you dont need .config uploaded then leaev blank'
+        required: false
+        default: ''
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -48,6 +52,7 @@ env:
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   PATCH_KSU: ${{ github.event.inputs.KSU }}
   SUFFIX: ${{ github.event.inputs.SUFFIX }}
+  DOTCONFIG: ${{ github.event.inputs.DOTCONFIG }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
@@ -109,6 +114,9 @@ jobs:
                 bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
               fi
             done
+            if [[ ! -z $DOTCONFIG ]]; then
+              bash ../tg_utils.sh up ".config"
+            fi
         - name: if it fails
           if: ${{ failure() }}
           run: |
