@@ -3,7 +3,7 @@
 maindir="$(pwd)"
 outside="${maindir}/.."
 
-dir="${outside}/NeutronClang"
+dir="${outside}/NeutronClang11032023"
 
 case $1 in
     "setup" )
