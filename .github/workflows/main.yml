@@ -115,7 +115,7 @@ jobs:
               fi
             done
             if [[ ! -z $DOTCONFIG ]]; then
-              bash ../tg_utils.sh up ".config"
+              bash ../tg_utils.sh up ".config" "a"
             fi
         - name: if it fails
           if: ${{ failure() }}
