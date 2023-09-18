@@ -85,14 +85,6 @@ jobs:
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: cloning kernel source%nlgh $RUN_NUM: repo: $REPO%nlgh $RUN_NUM: branch: $KERNEL_BRANCH"
             git clone --depth=1 --single-branch https://github.com/$REPO -b $KERNEL_BRANCH kernel
-        - name: patch for ksu if specified
-          run: |
-            if [[ ! -z $PATCH_KSU ]]; then
-              bash tg_utils.sh msg "gh $RUN_NUM: KernelSU patching enabled, patching"
-              cd kernel
-
-              bash ../ksu/patch.sh
-            fi
         - name: print kernel info
           run: |
             cd kernel
@@ -101,15 +93,34 @@ jobs:
         - name: run compilation scripts
           run: |
             cd kernel
-            bash ../tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
-            bash ../build.sh "$COMPILERS"
+            case $PATCH_KSU in
+              "both" )
+                bash ../tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
+                bash ../build.sh "$COMPILERS"
+                bash tg_utils.sh msg "gh $RUN_NUM: KernelSU patching enabled, patching"
+                bash ../ksu/patch.sh
+                bash ../tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
+                bash ../build.sh "$COMPILERS"
+              ;;
+              "" )
+                bash ../tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
+                bash ../build.sh "$COMPILERS"
+              ;;
+              "*" )
+                bash tg_utils.sh msg "gh $RUN_NUM: KernelSU patching enabled, patching"
+                bash ../ksu/patch.sh
+                bash ../tg_utils.sh msg "gh $RUN_NUM: running compilation script(s): $COMPILERS"
+                bash ../build.sh "$COMPILERS"
+              ;;
+            esac
+
         - name: upload
           run: |
             cd kernel
-            for file in $(find . -maxdepth 1 -name '*.zip'); do
+            for file in *.zip ; do
               bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
             done
-            for file in $(find . -maxdepth 1 -name '*.log'); do
+            for file in *.log ; do
               if [[ -e "${file}.info" ]]; then
                 bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
               fi
