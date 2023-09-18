@@ -8,12 +8,11 @@ GCC32="${outside}/EvaGCC/gcc32"
 
 case $1 in
     "setup" )
-        # Clone compiler
         if [[ ! -d "${GCC64}" ]]; then
             git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 "${GCC64}"
         fi
-        if [[ ! -d "${GCC}" ]]; then
-            git clone --depth=1 https://github.com/mvaisakh/gcc-arm "${GCC}"
+        if [[ ! -d "${GCC32}" ]]; then
+            git clone --depth=1 https://github.com/mvaisakh/gcc-arm "${GCC32}"
         fi
     ;;
 
