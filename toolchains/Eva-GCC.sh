@@ -22,7 +22,6 @@ case $1 in
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE=aarch64-elf- \
-            CROSS_COMPILE_ARM32=arm-eabi- \
             CROSS_COMPILE_COMPAT=arm-eabi- \
             LD="${GCC64}"/bin/aarch64-elf-ld.lld \
             AR=aarch64-elf-ar \
