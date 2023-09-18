@@ -3,8 +3,8 @@
 maindir="$(pwd)"
 outside="${maindir}/.."
 
-GCC64="${outside}/EvaGCC/gcc-arm64"
-GCC="${outside}/EvaGCC/gcc-arm"
+GCC64="${outside}/EvaGCC/gcc64"
+GCC32="${outside}/EvaGCC/gcc32"
 
 case $1 in
     "setup" )
@@ -18,18 +18,19 @@ case $1 in
     ;;
 
     "build" )
-        export PATH="${GCC64}/bin:${GCC}/bin:/usr/bin:${PATH}"
+        export PATH="${GCC32}/bin:${GCC64}/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE=aarch64-elf- \
             CROSS_COMPILE_ARM32=arm-eabi- \
             CROSS_COMPILE_COMPAT=arm-eabi- \
+            LD="${GCC64}"/bin/aarch64-elf-ld.lld \
             AR=aarch64-elf-ar \
-            NM=llvm-nm \
-            LD=ld.lld \
-            OBCOPY=llvm-objcopy \
+            AS=aarch64-elf-as \
+            NM=aarch64-elf-nm \
             OBJDUMP=aarch64-elf-objdump \
-            STRIP=aarch64-elf-strip \
+            OBJCOPY=aarch64-elf-objcopy \
+            CC=aarch64-elf-gcc \
             2>&1 | tee ${CUR_TOOLCHAIN}.log
     ;;
 esac
