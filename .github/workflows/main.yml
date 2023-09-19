@@ -41,6 +41,10 @@ on: # [push]
         description: 'if you dont need .config uploaded then leaev blank'
         required: false
         default: ''
+      UNOTES:
+        description: 'notes to print out'
+        required: false
+        default: ''
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -49,6 +53,7 @@ env:
   RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: ${{ github.event.inputs.KBRANCH }}
   NOTE: ${{ github.event.inputs.NOTES }}
+  UNOTE: ${{ github.event.inputs.UNOTES }}
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   PATCH_KSU: ${{ github.event.inputs.KSU }}
   SUFFIX: ${{ github.event.inputs.SUFFIX }}
@@ -114,6 +119,11 @@ jobs:
               ;;
             esac
 
+        - name: print unotes if exists
+          run: |
+            if [[ ! -z $UNOTE ]]; then
+              bash tg_utils.sh msg "gh $RUN_NUM: $UNOTE"
+            fi
         - name: upload
           run: |
             cd kernel
@@ -131,6 +141,11 @@ jobs:
             fi
             if [[ ! -z $DOTCONFIG ]]; then
               bash ../tg_utils.sh up "out/.config" "a"
+            fi
+        - name: print unotes if exists 2
+          run: |
+            if [[ ! -z $UNOTE ]]; then
+              bash tg_utils.sh msg "gh $RUN_NUM: $UNOTE"
             fi
         - name: if it fails
           if: ${{ failure() }}
