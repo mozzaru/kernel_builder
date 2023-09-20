@@ -15,7 +15,7 @@ export KBUILD_BUILD_HOST="telegram-de"
 export defconfig="selene_defconfig"
 
 export zipper_repo=fukiame/AnyKernel3-niigo
-export zipper_branch=selene-old
+export zipper_branch=selene
 
 export out_image="${maindir}/out/arch/${ARCH}/boot/Image.gz-dtb"
 export out_dtb="${maindir}/out/arch/${ARCH}/boot/dts/mediatek/mt6768.dtb"
