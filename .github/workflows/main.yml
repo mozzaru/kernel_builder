@@ -35,12 +35,12 @@ on: # [push]
         default: '-legacy'
       ZREPO:
         description: 'zipper repo'
-        required: true
-        default: 'niigo'
+        required: false
+        default: ''
       ZBRANCH:
         description: 'zipper branch'
-        required: true
-        default: 'niigo'
+        required: false
+        default: ''
       KSU:
         description: 'if dont want ksu then leave blank'
         required: false
@@ -56,8 +56,8 @@ env:
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   PATCH_KSU: ${{ github.event.inputs.KSU }}
   SUFFIX: ${{ github.event.inputs.SUFFIX }}
-  ZREPO: ${{ github.event.inputs.ZREPO }}
-  ZBRANCH: ${{ github.event.inputs.ZBRANCH }}
+  zipper_repo: ${{ github.event.inputs.ZREPO }}
+  zipper_branch: ${{ github.event.inputs.ZBRANCH }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
