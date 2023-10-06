@@ -33,12 +33,16 @@ on: # [push]
         description: 'suffix to aplly to teh zip filename'
         required: false
         default: '-legacy'
+      ZREPO:
+        description: 'zipper repo'
+        required: true
+        default: 'niigo'
+      ZBRANCH:
+        description: 'zipper branch'
+        required: true
+        default: 'niigo'
       KSU:
         description: 'if dont want ksu then leave blank'
-        required: false
-        default: ''
-      UNOTES:
-        description: 'notes to print out'
         required: false
         default: ''
 
@@ -49,10 +53,11 @@ env:
   RUN_NUM: ${{ github.run_number }}_${{ github.run_attempt }}
   KERNEL_BRANCH: ${{ github.event.inputs.KBRANCH }}
   NOTE: ${{ github.event.inputs.NOTES }}
-  UNOTE: ${{ github.event.inputs.UNOTES }}
   COMPILERS: ${{ github.event.inputs.COMPILER }}
   PATCH_KSU: ${{ github.event.inputs.KSU }}
   SUFFIX: ${{ github.event.inputs.SUFFIX }}
+  ZREPO: ${{ github.event.inputs.ZREPO }}
+  ZBRANCH: ${{ github.event.inputs.ZBRANCH }}
   TZ: Asia/Ho_Chi_Minh
 
 jobs:
