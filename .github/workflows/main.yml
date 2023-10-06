@@ -32,7 +32,7 @@ on: # [push]
       SUFFIX:
         description: 'suffix to aplly to teh zip filename'
         required: false
-        default: ''
+        default: '-legacy'
       KSU:
         description: 'if dont want ksu then leave blank'
         required: false
