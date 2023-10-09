@@ -45,6 +45,10 @@ on: # [push]
         description: 'if dont want ksu then leave blank'
         required: false
         default: ''
+      TG_RECIPENT:
+        description: 'idk'
+        required: false
+        default: ''
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -69,10 +73,16 @@ jobs:
     steps:
         - name: checkout
           uses: actions/checkout@master
+        - name: why
+          run: |
+            echo WORKFLOW_START=$(date +"%s") >> $GITHUB_ENV
+            ALT_RECIPENT=${{ github.event.inputs.TG_RECIPENT }}
+            if [ ! -z $ALT_RECIPENT ]; then
+              echo CHAT_ID="$ALT_RECIPENT" >> $GITHUB_ENV
+            fi
         - name: start of workflow
           run: |
             bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
-            echo WORKFLOW_START=$(date +"%s") >> $GITHUB_ENV
         - name: init build env
           run: |
             dnf group install development-tools -y
