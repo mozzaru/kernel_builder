@@ -49,6 +49,10 @@ on: # [push]
         description: 'idk'
         required: false
         default: ''
+      CONTAINER:
+        description: 'if you know you know'
+        required: true
+        default: 'fedora:rawhide'
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -68,7 +72,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: fedora:rawhide
+      image: ${{ github.event.inputs.CONTAINER }}
 
     steps:
         - name: checkout
