@@ -10,12 +10,19 @@ curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh
 KSU_git_ver=$(cd KernelSU && git rev-list --count HEAD)
 KSU_ver=$(($KSU_git_ver + 10000 + 200))
 
+patchesdir="$outside/ksu/patches/$(echo $kernel_ver | cut -d. -f1,2)"
+if [[ -d "$patchesdir" ]]; then
+  for patch_file in "$patchesdir"/*.patch ; do
+    patch -p1 < "$patch_file"
+  done
+else
+  echo "patching ksu failed, the kernel version you want to patch doesnt have patches here yet"
+  exit 1
+fi
+
 sed -i "s/\(CONFIG_LOCALVERSION=\)\(.*\)/\1\"-${kernel_name}-KSU${KSU_ver}\"/" "${defconfig_file}"
 
 echo "$(grep 'CONFIG_LOCALVERSION=' ${defconfig_file})"
 
 echo "includes KernelSU ${KSU_ver}" >> banner_append
 
-for patch_file in ${outside}/ksu/patches/*.patch ; do
-  patch -p1 < "$patch_file"
-done
