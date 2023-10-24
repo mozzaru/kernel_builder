@@ -84,9 +84,9 @@ jobs:
             if [ ! -z $ALT_RECIPENT ]; then
               echo CHAT_ID="$ALT_RECIPENT" >> $GITHUB_ENV
             fi
-        - name: start of workflow
-          run: |
-            bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
+        #- name: start of workflow
+        #  run: |
+        #    bash tg_utils.sh msg "gh $RUN_NUM: workflow started"
         - name: init build env
           run: |
             apt-get update
