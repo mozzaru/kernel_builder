@@ -100,7 +100,7 @@ jobs:
             bash tg_utils.sh msg "gh $RUN_NUM: build env initialized%nlgh $RUN_NUM: host: $(cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2)%nlgh $RUN_NUM: free disk space: $(df --sync -BM --output=avail / | grep -v Avail)"
         - name: print notes if exists
           run: |
-            if [[ ! -z $NOTE ]]; then
+            if [ ! -z $NOTE ]; then
               bash tg_utils.sh msg "gh $RUN_NUM: $NOTE"
             fi
         - name: clone kernel source
@@ -138,27 +138,27 @@ jobs:
 
         - name: print unotes if exists
           run: |
-            if [[ ! -z $UNOTE ]]; then
+            if [ ! -z $UNOTE ]; then
               bash tg_utils.sh msg "gh $RUN_NUM: $UNOTE"
             fi
         - name: upload
           run: |
             cd kernel
-            if [[ $(ls *.zip) ]]; then
+            if [ $(ls *.zip) ]; then
               for file in *.zip ; do
                 bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
               done
             fi
-            if [[ $(ls *.log) ]]; then
+            if [ $(ls *.log) ]; then
               for file in *.log ; do
-                if [[ -e "${file}.info" ]]; then
+                if [ -e "${file}.info" ]; then
                   bash ../tg_utils.sh up "${file}" "$(cat "${file}.info")"
                 fi
               done
             fi
         - name: print unotes if exists 2
           run: |
-            if [[ ! -z $UNOTE ]]; then
+            if [ ! -z $UNOTE ]; then
               bash tg_utils.sh msg "gh $RUN_NUM: $UNOTE"
             fi
         - name: if it fails
