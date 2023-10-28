@@ -49,5 +49,6 @@ for toolchain in $1; do
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
     echo "build failed in $((DIFF / 60))m, $((DIFF % 60))s" >> "${toolchain}.log.info"
+    echo "compiler: $(clang -v 2>&1 | cat)" >> "${toolchain}.log.info"
   fi
 done
