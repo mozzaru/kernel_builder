@@ -17,7 +17,7 @@ case $1 in
     ;;
 
     "info" )
-        return $(gcc -v 2>&1 | cat)
+        return "$(gcc -v 2>&1 | cat)"
     ;;
 
     "build" )
