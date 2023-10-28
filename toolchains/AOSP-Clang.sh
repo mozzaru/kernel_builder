@@ -21,6 +21,10 @@ case $1 in
       fi
     ;;
 
+    "info" )
+        return $(clang -v 2>&1 | cat)
+    ;;
+
     "build" )
         export PATH="$clang/bin:$gcc64/bin:$gcc/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2

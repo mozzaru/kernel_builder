@@ -16,6 +16,10 @@ case $1 in
         fi
     ;;
 
+    "info" )
+        return $(gcc -v 2>&1 | cat)
+    ;;
+
     "build" )
         export PATH="${GCC32}/bin:${GCC64}/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
