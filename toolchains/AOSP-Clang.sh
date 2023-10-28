@@ -27,6 +27,7 @@ case $1 in
         make -j$(nproc --all) O=out \
             CROSS_COMPILE="aarch64-linux-android-" \
             CROSS_COMPILE_ARM32="arm-linux-androideabi-" \
+            CROSS_COMPILE_COMPAT="arm-linux-androideabi-" \
             CLANG_TRIPLE="aarch64-linux-gnu-" \
             LD_LIBRARY_PATH="$clang/lib64:$LD_LIBRABRY_PATH" \
             CC=clang \
