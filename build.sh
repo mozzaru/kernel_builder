@@ -44,7 +44,7 @@ for toolchain in $1; do
     pack ${zip_name}
     echo "build succeeded in $((DIFF / 60))m, $((DIFF % 60))s" >> "${zip_name}.info"
     echo "md5: $(md5sum "${zip_name}" | cut -d' ' -f1)" >> "${zip_name}.info"
-    echo "compiler: ${toolchain}" >> "${zip_name}.info"
+    echo "compiler: $(clang -v 2>&1 | cat)" >> "${zip_name}.info"
   else
     BUILD_END=$(date +"%s")
     DIFF=$((BUILD_END - BUILD_START))
