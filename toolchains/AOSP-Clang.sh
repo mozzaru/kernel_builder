@@ -22,7 +22,7 @@ case $1 in
     ;;
 
     "info" )
-        return "$(clang -v 2>&1 | cat)"
+        return $(clang -v 2>&1 | cat)
     ;;
 
     "build" )
