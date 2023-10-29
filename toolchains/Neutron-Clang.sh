@@ -38,6 +38,6 @@ case $1 in
             HOSTLD=ld.lld \
             HOSTAR=llvm-ar \
             2>&1 | tee ${CUR_TOOLCHAIN}.log
-        clang -v 2>&1 | cat >> ${CUR_TOOLCHAIN}.info
+        sh ${outside}/ver_toolchain.sh clang ld.lld >> ${CUR_TOOLCHAIN}.info
     ;;
 esac
