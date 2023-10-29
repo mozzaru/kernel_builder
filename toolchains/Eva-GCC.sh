@@ -30,6 +30,6 @@ case $1 in
             OBJCOPY=aarch64-elf-objcopy \
             CC=aarch64-elf-gcc \
             2>&1 | tee ${CUR_TOOLCHAIN}.log
-        gcc -v >> ${CUR_TOOLCHAIN}.log
+        sh ${outside}/ver_toolchain.sh gcc ld >> ${CUR_TOOLCHAIN}.log
     ;;
 esac
