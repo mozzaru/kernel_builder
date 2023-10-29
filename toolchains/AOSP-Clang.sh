@@ -33,6 +33,6 @@ case $1 in
             CC=clang \
             LD=ld.lld \
             2>&1 | tee ${CUR_TOOLCHAIN}.log
-        clang -v 2>&1 | cat >> ${CUR_TOOLCHAIN}.log
+        clang -v 2>&1 | cat >> ${CUR_TOOLCHAIN}.info
     ;;
 esac
