@@ -9,9 +9,9 @@ source "${outside}/env"
 pack() {
   if [[ ! -d ${zipper} ]]; then
     git clone https://github.com/${zipper_repo} -b ${zipper_branch} "${zipper}"
-    cd "${zipper}"
+    cd "${zipper}" || exit 1
   else
-    cd "${zipper}"
+    cd "${zipper}" || exit 1
     git reset --hard
     git checkout ${zipper_branch}
     git fetch origin ${zipper_branch}
