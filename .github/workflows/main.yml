@@ -24,7 +24,7 @@ on: # [push]
       KBRANCH:
         description: 'kernel branch'
         required: true
-        default: 'niigo'
+        default: 'niigo-neon_e'
       NOTES:
         description: 'notes to print out'
         required: false
