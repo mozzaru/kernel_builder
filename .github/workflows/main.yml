@@ -16,15 +16,15 @@ on: # [push]
       COMPILER:
         description: 'compilers used'
         required: true
-        default: 'Neutron-Clang'
+        default: 'Neutron-Clang-17'
       KREPO:
         description: 'kernel repo'
         required: true
-        default: 'TelegramAt25/android_kernel_xiaomi_selene'
+        default: 'TelegramAt25/yuki_kernel_xiaomi_selene'
       KBRANCH:
         description: 'kernel branch'
         required: true
-        default: 'niigo-neon_e'
+        default: 'base'
       NOTES:
         description: 'notes to print out'
         required: false
