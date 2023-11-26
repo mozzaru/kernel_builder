@@ -19,7 +19,7 @@ case $1 in
     ;;
 
     "build" )
-        export PATH="${GCC64}/bin:${GCC32}/bin:/usr/bin:${PATH}:${GCC64}/bin:${GCC32}/bin"
+        export PATH="${GCC64}/bin:${GCC32}/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE=aarch64-elf- \
