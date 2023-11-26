@@ -7,11 +7,11 @@ export outside="${maindir}/.."
 source "${outside}/env"
 
 pack() {
-  if [ ! -d ${zipper} ]; then
+  if [[ ! -d ${zipper} ]]; then
     git clone https://github.com/${zipper_repo} -b ${zipper_branch} "${zipper}"
-    cd "${zipper}"
+    cd "${zipper}" || exit 1
   else
-    cd "${zipper}"
+    cd "${zipper}" || exit 1
     git reset --hard
     git checkout ${zipper_branch}
     git fetch origin ${zipper_branch}
@@ -20,14 +20,16 @@ pack() {
   cp -af "${out_image}" "${zipper}"
   cp -af "${out_dtb}" "${zipper}/dtb"
   cp -af "${out_dtbo}" "${zipper}/dtbo.img"
-  [ -e ${maindir}/banner_append ] && cat ${maindir}/banner_append >> ${zipper}/banner
+  if [[ -e ${maindir}/banner_append ]]; then
+    cat ${maindir}/banner_append >> ${zipper}/banner
+  fi
   zip -r9 "$1" ./* -x .git README.md ./*placeholder
   cd "${maindir}"
 }
 
 # build
 for toolchain in $1; do
-  #[ -z "$2" ] || rm -rf out
+  rm -rf out
 
   bash -x "${outside}/toolchains/${toolchain}.sh" setup
 
