@@ -3,8 +3,8 @@
 maindir="$(pwd)"
 outside="${maindir}/.."
 
-GCC64="./gcc64"
-GCC32="./gcc32"
+GCC64="/gcc64"
+GCC32="/gcc32"
 
 case $1 in
     "setup" )
