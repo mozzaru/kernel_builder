@@ -3,8 +3,8 @@
 maindir="$(pwd)"
 outside="${maindir}/.."
 
-GCC64="${outside}/EvaGCC/gcc64"
-GCC32="${outside}/EvaGCC/gcc32"
+GCC64="./gcc64"
+GCC32="./gcc32"
 
 case $1 in
     "setup" )
@@ -19,7 +19,7 @@ case $1 in
     ;;
 
     "build" )
-        export PATH="${GCC32}/bin:${GCC64}/bin:/usr/bin:${PATH}"
+        export PATH="${GCC64}/bin:${GCC32}/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE=aarch64-elf- \
