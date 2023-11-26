@@ -9,17 +9,17 @@ GCC32="/gcc32"
 case $1 in
     "setup" )
         if [[ ! -d "${GCC64}" ]]; then
-            git clone --depth=1 https://github.com/cyberknight777/gcc-arm64 "${GCC64}"
+            git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 "${GCC64}"
             chmod +x "${GCC64}"/bin/*
         fi
         if [[ ! -d "${GCC32}" ]]; then
-            git clone --depth=1 https://github.com/cyberknight777/gcc-arm "${GCC32}"
+            git clone --depth=1 https://github.com/mvaisakh/gcc-arm "${GCC32}"
             chmod +x "${GCC32}"/bin/*
         fi
     ;;
 
     "build" )
-        export PATH="${GCC64}/bin:${GCC32}/bin:${PATH}"
+        export PATH="${GCC64}/bin:${GCC32}/bin:/usr/bin:${PATH}"
         make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 $2
         make -j$(nproc --all) O=out \
             CROSS_COMPILE=aarch64-elf- \
