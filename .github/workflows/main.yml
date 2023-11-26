@@ -16,7 +16,7 @@ on: # [push]
       COMPILER:
         description: 'compilers used'
         required: true
-        default: 'Neutron-Clang-17'
+        default: 'Neutron-Clang'
       KREPO:
         description: 'kernel repo'
         required: true
